@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <link rel="icon" href="https://www.desmos.com/calc_thumbs/production/26xjggr7wh.png" type="image/x-icon" />
+    <meta charset="UTF-8">
+    <title>肏星 | Desmos</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        #desmos-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #audio-container {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        #audio-container:hover {
+            opacity: 1;
+        }
+        #audio-player {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 音频播放器 -->
+    <div id="audio-container">
+        <audio id="bgm" controls loop autoplay>
+            <source src="3house.mp3" type="audio/mpeg">
+            您的浏览器不支持音频播放。
+        </audio>
+    </div>
+    
+    <!-- Desmos 计算器 -->
+    <iframe id="desmos-frame" src="https://www.desmos.com/calculator/rdmp2uin9k"></iframe>
+
+    <script>
+        // 确保音频自动播放
+        document.addEventListener('DOMContentLoaded', function() {
+            const audio = document.getElementById('bgm');
+            
+            // 尝试自动播放
+            function playAudio() {
+                audio.play().catch(function(error) {
+                    console.log('自动播放被阻止:', error);
+                    // 如果需要用户交互，可以显示播放按钮
+                });
+            }
+            
+            // 页面加载后尝试播放
+            playAudio();
+            
+            // 如果自动播放失败，可以在用户与页面交互时再次尝试
+            document.addEventListener('click', function() {
+                if (audio.paused) {
+                    playAudio();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
